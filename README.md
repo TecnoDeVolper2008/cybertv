@@ -1,1 +1,1 @@
-Dev by MrRaviya
+Dev. by MrRaviya
