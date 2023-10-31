@@ -1,0 +1,136 @@
+(function ($, Drupal) {
+  "use strict";
+  Drupal.behaviors.mega_menu_mobile = {
+    attach: function (context, settings) {
+      //When clicked on menu item level-0
+      $(".mm-mobile-list li.level-0").click(function (event) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        event.stopPropagation();
+        $(this).addClass("selected-item");
+        $('ul.mm-mobile-list [data-level~="0"]').addClass("d-none");
+        $('ul.mm-mobile-list [data-level~="1"]').removeClass("d-none");
+        $(this).removeClass("d-none");
+        setDataToBack(this);
+        navigateToPage(event);
+      });
+
+      //When clicked on menu item level-1
+      $(".mm-mobile-list li.level-1").click(function (event) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        event.stopPropagation();
+        var target = $(this).children('.item-wrap').children('span').attr('data-target');
+        if(target == "_blank" && !$(this).hasClass('contains-items')){
+          $('ul.mm-mobile-list [data-level~="1"]').removeClass("d-none");
+          navigateToPage(event);
+        }else {
+          $('ul.mm-mobile-list [data-level~="1"]').addClass("d-none");
+          $('ul.mm-mobile-list [data-level~="2"]').removeClass("d-none");
+          $(this).removeClass("d-none");
+          $(this).parents("li,ul").removeClass("d-none");
+          $(this).removeClass("d-none");
+          $(this).addClass("selected-item");
+          setDataToBack(this);
+          navigateToPage(event);
+        }
+      });
+
+      //When clicked on menu item level-2
+      $(".mm-mobile-list li.level-2").click(function (event) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        event.stopPropagation();
+        navigateToPage(event);
+      });
+
+      //When clicked on back button
+      $(".btn-cont-left").click(function (event) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        event.stopPropagation();
+        var prevLevel = $(this).data("prev-level");
+        switch (prevLevel) {
+          case "0":
+            $('ul.mm-mobile-list [data-level~="0"]').removeClass("d-none");
+            $('ul.mm-mobile-list [data-level~="1"]').addClass("d-none");
+            $(".menu-top-container").addClass("d-none");
+            $('li.level-0.selected-item').removeClass("selected-item");
+            break;
+          case "1":
+            $('ul.mm-mobile-list [data-level~="1"]').removeClass("d-none");
+            $('ul.mm-mobile-list [data-level~="2"]').addClass("d-none");
+            $('li.level-1.selected-item').removeClass("selected-item");
+            $(".btn-cont-left").data("prev-level", "0");
+            var menuItem = $('li.level-0.selected-item span.level-0')
+            moveItemToTopBack(menuItem)
+            break;
+          case "2":
+            break;
+          default:
+            break;
+        }
+      });
+
+      //When clicked on menu item top right
+      $(".btn-menu-itm").click(function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        var child = $(this);
+        var baseURI = window.location.origin;
+        var url = baseURI + child.data("url");
+        var target = child.attr("data-target");
+        if (target || target !="") {
+          window.open(url, target);
+        } else {
+          $("#mobile_mega_menu").modal("toggle");
+          window.open(url, "_self");
+        }
+      });
+      function navigateToPage(event) {
+        var child = $(event.currentTarget.children[0].children[0]);
+        var baseURI = window.location.origin;
+        if (child.hasClass("not-contains-items")) {
+          var url = baseURI + child.attr("data-url");
+          var target = child.attr("data-target");
+          if (target || target !="") {
+            window.open(url, target);
+          } else {
+            $("#mobile_mega_menu").modal("toggle");
+            window.open(url, "_self");
+          }
+        } else {
+          moveItemToTop(event);
+        }
+      }
+
+      function moveItemToTopBack(object){
+        var link = $(object).data('url');
+        var txt = $(object).text()
+        $(".btn-menu-itm").data("url", link);
+        $(".btn-menu-itm").text(txt);
+      }
+
+      function moveItemToTop(event) {
+        $(".menu-top-container").removeClass("d-none");
+        var linkTxt = $(event.currentTarget.children[0].children[0]).text();
+        var child = $(event.currentTarget.children[0].children[0]);
+        var link = child.data("url");
+        var target = $(child).attr("data-target");
+        if(target || target !=""){
+          $(".btn-menu-itm").attr("data-target",target);
+        }else {
+          $(".btn-menu-itm").attr("data-target","_self");
+        }
+        $(".btn-menu-itm").data("url", link);
+        $(".btn-menu-itm").text(linkTxt);
+      }
+
+      function setDataToBack(object) {
+        var prevLevel = $(object).data("level").toString();
+        $(".btn-cont-left").data("prev-level", prevLevel);
+      }
+    },
+  };
+})(jQuery, Drupal);

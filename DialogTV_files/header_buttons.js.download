@@ -1,0 +1,114 @@
+(function($, Drupal){
+    Drupal.behaviors.header_buttons = {
+        attach: function (context, settings){
+            var $searchView = $('.search-box-wrap');
+            var $menu = $('.btn-quick-pay, .btn-cart, .btn-user, .dropdown-menu, .btn-search');
+            var $fadeScreen = $('.fade-screen');
+            var $searchField = $('#hb-search-field');
+
+            $('.btn-search, .fade-screen').on('click',(e)=>{
+              var langSelector = $('#lang-selector');
+              e.preventDefault();
+              e.stopImmediatePropagation();
+              resetSearchBox();
+              $searchView.toggleClass('active');
+              
+              setTimeout(function(){
+                $searchView.children().find('input').focus();
+              }, 200);
+              
+              $fadeScreen.toggleClass('visible');
+              $menu.removeClass('is-closed');
+              $menu.toggleClass('hidden');
+              langSelector.toggleClass('hidden');
+              e.preventDefault();
+            });
+            
+            $('.fade-screen,.menu-search-close').on('click', function(e) {
+              $menu.toggleClass('is-closed');
+              e.preventDefault();
+              resetSearchBox();
+            });
+            $searchField.on('input', (e) => {
+              e.preventDefault();
+              resetSearchBox()
+              var r = RegExp("[^a-zA-Z0-9,.'() ]*$");
+              $searchField.val($searchField.val().replace(r, ''));
+            })
+        
+            $('#mobile-search-input-form').submit(function(event) {
+              event.preventDefault();
+              var search_parm_mobile = $('#solr-mobile-search-input').val(); 
+              var currentUrl_mobile = "/index-content-search";
+              var url_mobile_header = currentUrl_mobile + '/' +search_parm_mobile;
+              window.location.href = url_mobile_header;
+            });
+        
+            $('#hb-search-button').click((e)=>{
+              e.preventDefault();
+              if($('#hb-search-field').val() ==''){
+                $('#hb-search-field').attr('placeholder','Enter text');
+                $('#hb-search-field').addClass('red-placeholder');
+              } else {
+                var search_parm = $('#hb-search-field').val() 
+                var currentUrl = $('#hb-search-button').attr('data-link');
+                var url = currentUrl + '/' +search_parm;
+                window.location.href = url;
+              }
+            })
+
+            function resetSearchBox(){
+              $('#hb-search-field').attr('placeholder','Search Dialog.lk....');
+              $('#hb-search-field').removeClass('red-placeholder');
+            }
+            $('.achievements-slider').slick({
+              draggable: true,
+              arrows: true,
+              dots: true,
+              fade: true,
+              speed: 900,
+              infinite: true,
+              cssEase: 'cubic-bezier(0.7, 0, 0.3, 1)',
+              touchThreshold: 100
+            });
+            $('.about-slider').slick({
+            draggable: true,
+            arrows: false,
+            dots: true,
+            fade: true,
+            speed: 900,
+            infinite: true,
+            cssEase: 'cubic-bezier(0.7, 0, 0.3, 1)',
+            touchThreshold: 100
+            });
+        // if (drupalSettings.is_logged_in && $("#cart-item-count2").length) {
+        //   var cart_id = localStorage.getItem("cart_id");
+        //   if (cart_id) {
+        //     $.ajax({
+        //         url: `/api/o2a/cart/get_cart_by_id?cart_id=${cart_id}`,
+        //         type: 'GET',
+        //         async: true,
+        //         success: function (res) {
+        //             if (res.success == false) {
+        //                 console.log("API Request Error");
+        //                 localStorage.setItem("cart_item_count", 0);
+        //             } else {
+        //                 cartOb = res.data;
+        //                 if (cartOb.items) {
+        //                     localStorage.setItem("cart_item_count", cartOb.items.length);
+        //                 } else {
+        //                     localStorage.setItem("cart_item_count", 0);
+        //                 }
+
+        //             }
+        //         },
+        //         fail: function () {
+        //             console.log("API Request Error");
+        //             localStorage.setItem("cart_item_count", 0);
+        //         }
+        //     });
+        //   }
+        // }
+      }
+    };
+})(jQuery, Drupal);
