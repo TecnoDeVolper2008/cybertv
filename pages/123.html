@@ -1,0 +1,16 @@
+<html>
+
+<head>
+    <script src='/scripts/urls.js'></script>
+    <script src='/scripts/clearkeys.js'></script>
+    <script src='/scripts/clappr.min.js'></script>
+    <script src='/scripts/dash-shaka-playback.js'></script>
+    <script src='/scripts/level-selector.min.js'></script>
+</head>
+
+<body bgcolor='black'>
+    <div id='player'></div>
+</body>
+<script>id = 123; player = new Clappr.Player({ source: urls[id], parentId: '#player', width: '100%', height: '100%', autoPlay: true, plugins: [DashShakaPlayback, LevelSelector], shakaOnBeforeLoad: function (shaka_player) { shaka_player.configure({ drm: { clearKeys: clearkeys[id] } }) } })</script>
+
+</html>
