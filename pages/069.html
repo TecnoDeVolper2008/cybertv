@@ -6,17 +6,51 @@
     <script src='/dtv/scripts/clappr.min.js'></script>
     <script src='/dtv/scripts/dash-shaka-playback.js'></script>
     <script src='/dtv/scripts/level-selector.min.js'></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black;
+            margin: 0;
+        }
+        #player {
+            width: 70%;
+            height: 70%;
+        }
+        #logo {
+            position: absolute;
+            top: 10%;
+            left: 25%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+    </style>
 </head>
 
-<body bgcolor='black'>
+<body>
     <div id='player'></div>
-<div data-shaka-player-container id="videoContainer">
-        <video autoplay data-shaka-player id="video"></video>
-        <div id="logo">
-            <img src="https://cyberyakku.com/wp-content/uploads/2022/07/r-logo31.png" alt="CyberYakku">
-        </div>
-    </div>
+    <img id="logo" src="https://cyberyakku.com/wp-content/uploads/2022/07/r-logo31.png" alt="Logo">
+    
+    <script>
+        id = 69;
+        player = new Clappr.Player({
+            source: urls[id],
+            parentId: '#player',
+            width: '100%',
+            height: '100%',
+            autoPlay: true,
+            plugins: [DashShakaPlayback, LevelSelector],
+            shakaOnBeforeLoad: function (shaka_player) {
+                shaka_player.configure({
+                    drm: {
+                        clearKeys: clearkeys[id]
+                    }
+                })
+            }
+        });
+    </script>
 </body>
-<script>id = 69; player = new Clappr.Player({ source: urls[id], parentId: '#player', width: '100%', height: '100%', autoPlay: true, plugins: [DashShakaPlayback, LevelSelector], shakaOnBeforeLoad: function (shaka_player) { shaka_player.configure({ drm: { clearKeys: clearkeys[id] } }) } })</script>
 
 </html>
