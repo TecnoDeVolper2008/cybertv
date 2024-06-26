@@ -1,16 +1,16 @@
-<html>
-
-<head>
-    <script src='/dtv/scripts/urls.js'></script>
-    <script src='/dtv/scripts/clearkeys.js'></script>
-    <script src='/dtv/scripts/clappr.min.js'></script>
-    <script src='/dtv/scripts/dash-shaka-playback.js'></script>
-    <script src='/dtv/scripts/level-selector.min.js'></script>
-</head>
-
-<body bgcolor='black'>
-    <div id='player'></div>
-</body>
-<script>id = 1; player = new Clappr.Player({ source: urls[id], parentId: '#player', width: '100%', height: '100%', autoPlay: true, plugins: [DashShakaPlayback, LevelSelector], shakaOnBeforeLoad: function (shaka_player) { shaka_player.configure({ drm: { clearKeys: clearkeys[id] } }) } })</script>
-
-</html>
+<script src="https://content.jwplatform.com/libraries/Z79JsmAO.js"></script>
+<div id="jwplayerDiv"></div>
+<script>	
+jwplayer("jwplayerDiv").setup({
+    //playlist: [{
+        file: "https://bpcdn.dialog.lk/bpk-tv/Ch001/output/index.mpd",
+		//type: "dash",
+	    drm: {
+	        clearkey: {
+	          key: '290634b85d663603c518d270c92ede1e',
+	          keyId: '5803f3c583da2cbc8db8c97db5ca0f20'
+	        }
+	      }
+   // }]
+});
+</script>
