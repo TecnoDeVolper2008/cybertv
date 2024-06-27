@@ -1,27 +1,22 @@
 <html>
-
-<body bgcolor='black'>
-	
-<div id="jwplayerDiv"></div>
-	
-</body>
-<script src="https://content.jwplatform.com/libraries/Z79JsmAO.js"></script>
-
-<script>	
-jwplayer("jwplayerDiv").setup({
-	autoPlay: true,
-	width: '100%', height: '100%',
-    //playlist: [{
-        file: "https://bpcdn.dialog.lk/bpk-tv/Ch001/output/index.mpd",
-		//type: "dash",
-	    drm: {
-	        clearkey: {
-	          key: '290634b85d663603c518d270c92ede1e',
-	          keyId: '5803f3c583da2cbc8db8c97db5ca0f20'
-	        }
-	      }
-   // }]
-});
-</script>
-
+   <body bgcolor='black'>
+      <div id="jwplayerDiv"></div>
+   </body>
+   <script src="https://content.jwplatform.com/libraries/Z79JsmAO.js"></script>
+   <script>	
+      jwplayer("jwplayerDiv").setup({
+      	autoPlay: true,
+      	width: '100%', height: '100%',
+          //playlist: [{
+              file: "https://bpcdn.dialog.lk/bpk-tv/Ch001/output/index.mpd",
+      		//type: "dash",
+      	    drm: {
+      	        clearkey: {
+      	          key: '290634b85d663603c518d270c92ede1e',
+      	          keyId: '5803f3c583da2cbc8db8c97db5ca0f20'
+      	        }
+      	      }
+         // }]
+      });
+   </script>
 </html>
