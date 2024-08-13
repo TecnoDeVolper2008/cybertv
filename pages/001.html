@@ -1,41 +1,49 @@
-<html>
-   <body bgcolor='black'>
-      <style>
-         body {
-         display: flex;
-         justify-content: center;
-         align-items: center;
-         height: 100vh;
-         background-color: black;
-         margin: 0;
-         }
-         #logo {
-         position: absolute;
-         top: 60%;
-         left: 52%;
-         transform: translate(-50%, -50%);
-         z-index: 10;
-         opacity: 0.1;
-         }
-      </style>
-      <div id="jwplayerDiv"></div>
-      <img id="logo" src="https://i.ibb.co/G2rWNCr/image.png" alt="Logo">
-   </body>
-   <script src="https://content.jwplatform.com/libraries/Z79JsmAO.js"></script>
-   <script>	
-      jwplayer("jwplayerDiv").setup({
-      	width: '100%', height: '100%',
-          //playlist: [{
-              file: "https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd",
-      		//type: "dash",
-      	    drm: {
-      	        clearkey: {
-                   keyId: "",
-      	          key: ""
-      	          
-      	        }
-      	      }
-         // }]
-      });
-   </script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JW Player with Clear Key DRM</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black;
+            margin: 0;
+        }
+        #logo {
+            position: absolute;
+            top: 60%;
+            left: 52%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            opacity: 0.1;
+        }
+    </style>
+</head>
+<body>
+    <div id="jwplayerDiv"></div>
+    <img id="logo" src="https://i.ibb.co/G2rWNCr/image.png" alt="Logo">
+    <script src="https://content.jwplatform.com/libraries/Z79JsmAO.js"></script>
+    <script>
+        // The Clear Key DRM information
+        const keyId = '00000000000000000000000000000000'; // Replace with actual key ID in hexadecimal
+        const key = 'YOUR_CLEAR_KEY_BASE64'; // Replace with actual key in base64
+
+        // Setup JW Player
+        jwplayer("jwplayerDiv").setup({
+            width: '100%',
+            height: '100%',
+            file: "https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd",
+            type: "mpd",
+            drm: {
+                clearkey: {
+                    [keyId]: key
+                }
+            }
+        });
+    </script>
+</body>
 </html>
